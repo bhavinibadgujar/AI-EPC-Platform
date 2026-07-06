@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from utils.pdf_reader import extract_text
+from pdf_reader import extract_text
 
 st.set_page_config(
     page_title="EPC AI Copilot",
