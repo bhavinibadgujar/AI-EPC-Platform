@@ -1,13 +1,14 @@
 from pydantic import BaseModel
 
-
-class ProjectCreate(BaseModel):
+class ProjectBase(BaseModel):
     name: str
-    description: str
+    location: str
     status: str
 
+class ProjectCreate(ProjectBase):
+    pass
 
-class ProjectResponse(ProjectCreate):
+class Project(ProjectBase):
     id: int
 
     class Config:
