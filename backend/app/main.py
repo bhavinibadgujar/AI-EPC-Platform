@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-
+from app.db.document_model import Document
 from app.db.database import Base, engine
 import app.db.models
+from app.api.document import router as document_router
 
 # Import the router
 from app.api.projects import router as project_router
@@ -16,6 +17,7 @@ app = FastAPI(
 
 # Register the Projects router
 app.include_router(project_router)
+app.include_router(document_router)
 
 
 @app.get("/")
@@ -31,3 +33,4 @@ def health():
     return {
         "status": "healthy"
     }
+

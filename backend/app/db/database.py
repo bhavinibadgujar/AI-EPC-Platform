@@ -26,4 +26,3 @@ def get_db():
     finally:
         db.close()
 
-from sqlalchemy.orm import sessionmaker
