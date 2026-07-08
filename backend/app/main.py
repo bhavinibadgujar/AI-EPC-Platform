@@ -1,11 +1,16 @@
 from fastapi import FastAPI
-from app.db.document_model import Document
+
 from app.db.database import Base, engine
 import app.db.models
-from app.api.document import router as document_router
 
-# Import the router
-from app.api.projects import router as project_router
+from app.api import (
+    projects,
+    document,
+    dashboard,
+    timeline,
+    risk,
+    executive,
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -15,10 +20,12 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Register the Projects router
-app.include_router(project_router)
-app.include_router(document_router)
-
+app.include_router(projects.router)
+app.include_router(document.router)
+app.include_router(dashboard.router)
+app.include_router(timeline.router)
+app.include_router(risk.router)
+app.include_router(executive.router)
 
 @app.get("/")
 def root():

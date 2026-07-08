@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
 
 from app.db.database import Base
-
+from app.db.models import Project
 
 class Document(Base):
     __tablename__ = "documents"
