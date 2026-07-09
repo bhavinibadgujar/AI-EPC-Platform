@@ -10,6 +10,7 @@ from app.api import (
     timeline,
     risk,
     executive,
+    ai
 )
 
 Base.metadata.create_all(bind=engine)
@@ -26,6 +27,8 @@ app.include_router(dashboard.router)
 app.include_router(timeline.router)
 app.include_router(risk.router)
 app.include_router(executive.router)
+app.include_router(ai.router)
+
 
 @app.get("/")
 def root():
@@ -40,4 +43,3 @@ def health():
     return {
         "status": "healthy"
     }
-

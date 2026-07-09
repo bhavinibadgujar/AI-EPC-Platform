@@ -1,10 +1,17 @@
 import os
 
-from fastapi import APIRouter, UploadFile, File, Depends
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
-from app.db.document_model import Document
+from app.services.document_service import (
+    create_document,
+    get_documents,
+    get_document,
+    delete_document,
+    search_documents,
+    filter_documents,
+)
 
 router = APIRouter(
     prefix="/documents",
@@ -19,6 +26,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @router.post("/upload")
 async def upload_document(
     file: UploadFile = File(...),
+    project_id: int = None,
     db: Session = Depends(get_db)
 ):
     file_location = os.path.join(
@@ -29,60 +37,78 @@ async def upload_document(
     with open(file_location, "wb") as f:
         f.write(await file.read())
 
-    document = Document(
+    document = create_document(
+        db=db,
         filename=file.filename,
         filepath=file_location,
         filetype=file.content_type,
-        filesize=os.path.getsize(file_location)
+        filesize=os.path.getsize(file_location),
+        project_id=project_id
     )
-
-    db.add(document)
-    db.commit()
-    db.refresh(document)
 
     return {
         "message": "File uploaded successfully",
         "document_id": document.id
     }
+
+
 @router.get("/")
-def get_documents(db: Session = Depends(get_db)):
-    return db.query(Document).all()
+def get_all_documents(
+    db: Session = Depends(get_db)
+):
+    return get_documents(db)
+
 
 @router.get("/{document_id}")
-def get_document(
+def get_single_document(
     document_id: int,
     db: Session = Depends(get_db)
 ):
-    return db.query(Document).filter(
-        Document.id == document_id
-    ).first()
-
-@router.delete("/{document_id}")
-def delete_document(
-    document_id: int,
-    db: Session = Depends(get_db)
-):
-    document = db.query(Document).filter(
-        Document.id == document_id
-    ).first()
+    document = get_document(db, document_id)
 
     if not document:
-        return {"message": "Document not found"}
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found"
+        )
 
-    if os.path.exists(document.filepath):
-        os.remove(document.filepath)
-
-    db.delete(document)
-    db.commit()
-
-    return {"message": "Document deleted successfully"}
+    return document
 
 
+@router.delete("/{document_id}")
+def delete_single_document(
+    document_id: int,
+    db: Session = Depends(get_db)
+):
+    document = delete_document(db, document_id)
+
+    if not document:
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found"
+        )
+
+    return {
+        "message": "Document deleted successfully"
+    }
 
 
+@router.get("/search/")
+def search_document(
+    query: str,
+    db: Session = Depends(get_db)
+):
+    return search_documents(db, query)
 
 
-
-
-
-
+@router.get("/filter/")
+def filter_document(
+    project_id: int = None,
+    filetype: str = None,
+    db: Session = Depends(get_db)
+):
+    return filter_documents(
+        db,
+        project_id,
+        filetype
+    )
