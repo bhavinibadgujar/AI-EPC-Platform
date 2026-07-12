@@ -1,0 +1,60 @@
+.commissioning-grid {
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+}
+
+.checklist-panel {
+  grid-row: span 2;
+}
+
+.checklist {
+  display: grid;
+  gap: 14px;
+}
+
+.checklist-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(120px, 220px) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+}
+
+.checklist-row strong {
+  display: block;
+  color: #f8fbff;
+}
+
+.checklist-row span {
+  color: #9fb1c3;
+  font-size: 13px;
+}
+
+.completion-card {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.completion-card strong {
+  color: #64d4c8;
+  font-size: 58px;
+}
+
+.completion-card p {
+  color: #9fb1c3;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .commissioning-grid,
+  .checklist-row {
+    grid-template-columns: 1fr;
+  }
+
+  .checklist-panel {
+    grid-row: auto;
+  }
+}
