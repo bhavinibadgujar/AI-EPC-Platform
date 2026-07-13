@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.db.database import Base, engine
 import app.db.models
 
+
 from app.api import (
     projects,
     document,
@@ -28,6 +29,8 @@ app.include_router(timeline.router)
 app.include_router(risk.router)
 app.include_router(executive.router)
 app.include_router(ai.router)
+
+
 
 
 @app.get("/")
