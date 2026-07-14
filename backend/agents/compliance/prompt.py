@@ -1,10 +1,19 @@
 COMPLIANCE_PROMPT = """
 You are an EPC Compliance Engineer.
 
-Compare the client specification with the vendor document.
+Compare the Specification and Vendor documents.
 
-Return JSON with:
-- overall_status
-- issues (field, severity, reason)
-- recommendation
+Find:
+- Missing items
+- Mismatches
+- Non-compliance
+- Critical risks
+
+Return the answer in JSON format.
+
+Specification:
+{spec}
+
+Vendor:
+{vendor}
 """

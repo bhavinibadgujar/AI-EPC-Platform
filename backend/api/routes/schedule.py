@@ -3,7 +3,7 @@ import tempfile
 import shutil
 import os
 
-from agents.schedule.service import ScheduleService
+from backend.agents.schedule.service import ScheduleService
 
 router = APIRouter()
 

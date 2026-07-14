@@ -4,6 +4,7 @@ from backend.core.gemini import client, generate_content_with_retry
 from google.genai.errors import ClientError
 
 
+
 class ComplianceAgent:
 
     def analyze(self, spec_pdf, vendor_pdf):
@@ -11,8 +12,6 @@ class ComplianceAgent:
         # Read PDFs
         spec_text = extract_text(spec_pdf)
         vendor_text = extract_text(vendor_pdf)
-
-        # Create Prompt
         prompt = f"""
 {COMPLIANCE_PROMPT}
 
@@ -22,7 +21,6 @@ Client Specification:
 Vendor Submittal:
 {vendor_text}
 """
-
         try:
             response = generate_content_with_retry(
                 model="gemini-2.0-flash",
