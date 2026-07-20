@@ -1,0 +1,21 @@
+Project,Equipment,Planned Date,Status
+Epsilon Data Center,Compressor,2024-02-28,Open
+Beta Solar Plant,Turbine,2026-10-08,Pending
+Delta Chemical Plant,Boiler,2026-04-09,Open
+Delta Chemical Plant,Boiler,2024-04-16,Open
+Alpha Refinery,Generator,2025-04-18,Pending
+Delta Chemical Plant,Turbine,2024-02-22,Closed
+Beta Solar Plant,Turbine,2024-11-12,Open
+Gamma Wind Farm,Chiller,2026-05-11,Rejected
+Alpha Refinery,Turbine,2025-07-14,Approved
+Delta Chemical Plant,Turbine,2026-09-21,Pending
+Gamma Wind Farm,Turbine,2025-01-19,Pending
+Epsilon Data Center,Compressor,2025-04-15,Approved
+Beta Solar Plant,Compressor,2026-10-20,Open
+Epsilon Data Center,Boiler,2026-01-23,Rejected
+Gamma Wind Farm,Generator,2026-11-18,Open
+Delta Chemical Plant,Chiller,2025-11-23,Approved
+Beta Solar Plant,Turbine,2024-01-28,Approved
+Delta Chemical Plant,Compressor,2025-08-04,Open
+Beta Solar Plant,Generator,2025-10-05,Rejected
+Alpha Refinery,Chiller,2025-09-16,Closed
