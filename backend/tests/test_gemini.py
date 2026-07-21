@@ -16,7 +16,7 @@ retry_count = 0
 while retry_count < max_retries:
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+           model="gemini-2.5-flash-lite",
             contents="Reply with only the word: Hello"
         )
         print(response.text)

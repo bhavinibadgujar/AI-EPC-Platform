@@ -1,0 +1,109 @@
+.commissioning-page {}
+
+/* Completion badge in header */
+.cx-completion-badge {
+  min-width: 140px;
+  padding: 20px;
+  text-align: center;
+  background: rgba(10,22,40,0.78);
+  border: 1px solid rgba(100,212,200,0.22);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+}
+
+.cx-completion-badge strong {
+  display: block;
+  color: #5ecc8a;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.cx-completion-badge span {
+  color: #647d91;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Checklist items */
+.checklist {
+  display: grid;
+  gap: 12px;
+}
+
+.checklist-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.5fr) minmax(120px, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  transition: background 150ms ease;
+}
+
+.checklist-row:hover {
+  background: rgba(100,212,200,0.04);
+}
+
+.checklist-info strong {
+  display: block;
+  color: #f0f7ff;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.checklist-info span {
+  color: #647d91;
+  font-size: 12px;
+}
+
+.checklist-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checklist-progress .MuiLinearProgress-root {
+  flex: 1;
+}
+
+.progress-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: #a0b5c8;
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Completion card */
+.cx-completion-card {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.cx-completion-card > strong {
+  color: #5ecc8a;
+  font-size: 54px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.cx-completion-card p {
+  color: #a0b5c8;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .checklist-row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+  }
+  .checklist-progress { grid-column: span 2; }
+}

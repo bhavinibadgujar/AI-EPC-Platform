@@ -1,6 +1,5 @@
 from fastapi import APIRouter, UploadFile, File
-
-from app.services.ai_service import (
+from backend.app.services.ai_service import (
     compliance_with_ai,
     schedule_risk_with_ai
 )

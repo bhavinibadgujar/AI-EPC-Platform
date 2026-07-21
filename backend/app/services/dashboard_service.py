@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
-from app.db.models import Project
-from app.db.models import Document
+from backend.app.db.models import Project, Document
 
 
 def get_dashboard_data(db: Session):

@@ -10,3 +10,8 @@ node_modules/
 
 # Ignore environment variables
 .env
+
+# Pytest runtime artifacts
+.pytest-tmp/
+.pytest-cache/
+.pytest_cache/

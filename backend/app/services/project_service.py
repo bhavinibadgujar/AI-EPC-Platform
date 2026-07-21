@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
-from app.db.models import Project
-from app.schemas.project import ProjectCreate
+from backend.app.db.models import Project
+from backend.app.schemas.project import ProjectCreate
 
 
 def create_project(db: Session, project: ProjectCreate):

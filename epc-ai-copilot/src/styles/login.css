@@ -1,0 +1,115 @@
+.login-page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 20%, rgba(36,120,162,0.18) 0%, transparent 70%),
+    linear-gradient(160deg, #060e1a 0%, #0a1628 60%, #0d1e32 100%);
+  overflow: hidden;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 22px;
+  width: min(440px, 94vw);
+  padding: 36px 32px;
+  background: rgba(8, 18, 34, 0.88);
+  border: 1px solid rgba(100, 212, 200, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+  backdrop-filter: blur(24px);
+}
+
+/* ── Brand ───────────────────────────────────────────────────── */
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.login-logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #64d4c8, #68a7ff);
+  border-radius: 12px;
+  color: #060e1a;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(100,212,200,0.3);
+}
+
+.login-brand h1 {
+  color: #f0f7ff;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.login-brand p {
+  margin-top: 3px;
+  color: #647d91;
+  font-size: 13px;
+}
+
+/* ── Fields ──────────────────────────────────────────────────── */
+.login-fields {
+  display: grid;
+  gap: 14px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 48px;
+  color: #647d91;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  cursor: text;
+  transition: border-color 180ms ease;
+}
+
+.input-field:focus-within {
+  border-color: rgba(100,212,200,0.45);
+}
+
+.input-field svg {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.input-field input {
+  flex: 1;
+  height: 100%;
+  color: #f0f7ff;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 14px;
+}
+
+.input-field input::placeholder { color: #647d91; }
+
+/* ── Options ─────────────────────────────────────────────────── */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.login-footer {
+  text-align: center;
+  color: #647d91;
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 16px;
+  margin-top: 4px;
+}

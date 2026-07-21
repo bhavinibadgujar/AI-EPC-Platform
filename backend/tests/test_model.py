@@ -1,6 +1,8 @@
-from backend.core.gemini import client
+﻿from backend.app.core.gemini_client import mock_json
 
-models = client.models.list()
 
-for model in models:
-    print(model.name)
+def test_gemini_mock_is_deterministic():
+    result = mock_json("hello")
+
+    assert result["mock"] is True
+    assert "answer" in result
