@@ -3,7 +3,7 @@ import os
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 
-from app.db.models import Document
+from backend.app.db.models import Document
 
 
 def create_document(

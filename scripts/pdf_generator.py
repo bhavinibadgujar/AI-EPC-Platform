@@ -1,85 +1,93 @@
-# scripts/pdf_generator.py
 from fpdf import FPDF
 import random
-from data import random_vendor, random_equipment, random_project, random_status, random_date
-from utils import get_output_path
 
-def create_pdf(title: str, content: list, filename: str, folder: str = "output/pdfs"):
-    pdf = FPDF()
+from data import (
+    random_project,
+    random_vendor,
+    random_equipment,
+    random_date,
+)
+
+from utils import get_output_path
+from epc_sections import generate_section, SECTIONS
+
+
+class EPCPDF(FPDF):
+
+    def header(self):
+        self.set_font("Arial", "B", 14)
+        self.cell(0, 10, "AI EPC Platform - Engineering Specification", ln=True, align="C")
+        self.ln(5)
+
+    def footer(self):
+        self.set_y(-15)
+        self.set_font("Arial", "I", 9)
+        self.cell(0, 10, f"Page {self.page_no()}", align="C")
+
+
+def create_specification(filename):
+
+    pdf = EPCPDF()
+
+    pdf.set_auto_page_break(auto=True, margin=15)
+
     pdf.add_page()
+
+    pdf.set_font("Arial", "B", 16)
+
+    pdf.cell(0, 10, "Engineering Specification", ln=True)
+
+    pdf.ln(5)
+
     pdf.set_font("Arial", size=12)
 
-    pdf.cell(200, 10, txt=title, ln=True, align="C")
+    pdf.cell(0, 8, f"Project : {random_project()}", ln=True)
+    pdf.cell(0, 8, f"Vendor  : {random_vendor()}", ln=True)
+    pdf.cell(0, 8, f"Equipment : {random_equipment()}", ln=True)
+    pdf.cell(0, 8, f"Issue Date : {random_date()}", ln=True)
+
     pdf.ln(10)
 
-    for line in content:
-        pdf.multi_cell(0, 10, line)
+    # Generate all sections
+    for section_name in SECTIONS.keys():
 
-    output_path = get_output_path(folder, filename)
-    pdf.output(output_path)
-    print(f"Generated: {output_path}")
+        pdf.set_font("Arial", "B", 14)
 
-# --- Generators for each type of EPC document ---
+        pdf.multi_cell(0, 8, section_name)
 
-def generate_specifications(count=10):
+        pdf.ln(2)
+
+        pdf.set_font("Arial", size=11)
+
+        paragraphs = generate_section(
+            section_name,
+            paragraphs=35
+        )
+
+        for paragraph in paragraphs:
+
+            pdf.multi_cell(0, 7, paragraph)
+
+            pdf.ln(1)
+
+        pdf.ln(5)
+
+    output = get_output_path("output/pdfs", filename)
+
+    pdf.output(output)
+
+    print(f"Generated {output}")
+
+
+def generate_specifications(count=5):
+
     for i in range(count):
-        content = [
-            f"Project: {random_project()}",
-            f"Equipment: {random_equipment()}",
-            f"Vendor: {random_vendor()}",
-            f"Date: {random_date()}",
-            "Specification details go here..."
-        ]
-        create_pdf("Specification", content, f"spec_{i+1}.pdf")
 
-def generate_vendor_submittals(count=10):
-    for i in range(count):
-        content = [
-            f"Vendor: {random_vendor()}",
-            f"Equipment: {random_equipment()}",
-            f"Project: {random_project()}",
-            f"Status: {random_status()}",
-            f"Date: {random_date()}",
-            "Vendor submittal details..."
-        ]
-        create_pdf("Vendor Submittal", content, f"vendor_submittal_{i+1}.pdf")
+        create_specification(
+            f"spec_{i+1}.pdf"
+        )
 
-def generate_rfis(count=20):
-    for i in range(count):
-        content = [
-            f"Project: {random_project()}",
-            f"RFI Number: {i+1}",
-            f"Status: {random_status()}",
-            f"Date: {random_date()}",
-            "Request for Information details..."
-        ]
-        create_pdf("RFI", content, f"rfi_{i+1}.pdf")
 
-def generate_meeting_minutes(count=20):
-    for i in range(count):
-        content = [
-            f"Project: {random_project()}",
-            f"Meeting Date: {random_date()}",
-            f"Attendees: {random_vendor()}, {random_vendor()}",
-            "Discussion points...",
-            "Action items..."
-        ]
-        create_pdf("Meeting Minutes", content, f"meeting_minutes_{i+1}.pdf")
+if __name__ == "__main__":
 
-def generate_commissioning_checklists(count=10):
-    for i in range(count):
-        content = [
-            f"Project: {random_project()}",
-            f"Equipment: {random_equipment()}",
-            f"Date: {random_date()}",
-            "Commissioning checklist items..."
-        ]
-        create_pdf("Commissioning Checklist", content, f"commissioning_{i+1}.pdf")
-
-# --- Master function ---
-def generate_all_pdfs():
     generate_specifications()
-    generate_vendor_submittals()
-    generate_rfis()
-    generate_meeting_minutes()
-    generate_commissioning_checklists()

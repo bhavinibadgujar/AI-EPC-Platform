@@ -1,0 +1,6 @@
+Project: Demo Data Centre
+Equipment: UPS and Generator Systems
+Vendor: Demo Vendor
+
+UPS battery autonomy is 10 minutes.
+Generator load bank test is 2 hours at 75%.

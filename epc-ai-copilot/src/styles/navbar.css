@@ -1,0 +1,389 @@
+/* ─────────────────────────────────────────────────────────────
+   NAVBAR
+───────────────────────────────────────────────────────────── */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  padding: 16px 22px;
+  margin-bottom: 24px;
+
+  background: rgba(6, 14, 26, 0.82);
+  border: 1px solid rgba(100, 212, 200, 0.12);
+  border-radius: 14px;
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 6px 30px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* --------------------------------------------------------- */
+/* Brand */
+/* --------------------------------------------------------- */
+
+.navbar-title{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+}
+
+.navbar-brand-icon{
+
+  width:42px;
+  height:42px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:12px;
+
+  background:linear-gradient(135deg,#64d4c8,#68a7ff);
+
+  color:#08172a;
+
+  font-weight:900;
+  font-size:15px;
+
+  letter-spacing:-.5px;
+
+  flex-shrink:0;
+
+  box-shadow:0 6px 18px rgba(100,212,200,.25);
+
+}
+
+.navbar-title-text{
+
+  display:flex;
+  flex-direction:column;
+
+}
+
+.navbar-kicker{
+
+  color:#64d4c8;
+
+  font-size:16px;
+
+  font-weight:800;
+
+  line-height:1.2;
+
+}
+
+.navbar-kicker-sub{
+
+  margin-top:2px;
+
+  color:#7b92a7;
+
+  font-size:11px;
+
+  font-weight:500;
+
+}
+
+/* --------------------------------------------------------- */
+/* Right */
+/* --------------------------------------------------------- */
+
+.navbar-actions{
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+}
+
+/* --------------------------------------------------------- */
+/* Live Badge */
+/* --------------------------------------------------------- */
+
+.live-badge{
+
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  padding:6px 12px;
+
+  border-radius:8px;
+
+  background:rgba(34,197,94,.10);
+
+  border:1px solid rgba(34,197,94,.22);
+
+  color:#86efac;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  white-space:nowrap;
+
+}
+
+.live-badge svg{
+
+  font-size:7px;
+
+  animation:livePulse 2s infinite;
+
+}
+
+@keyframes livePulse{
+
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.25;
+  }
+
+}
+
+/* --------------------------------------------------------- */
+
+.last-updated{
+
+  color:#6e879b;
+
+  font-size:12px;
+
+  white-space:nowrap;
+
+}
+
+/* --------------------------------------------------------- */
+/* Search */
+/* --------------------------------------------------------- */
+
+.navbar-search{
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  width:min(300px,28vw);
+
+  height:40px;
+
+  padding:0 14px;
+
+  border-radius:10px;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  color:#7d95a9;
+
+  transition:.25s;
+
+  cursor:pointer;
+
+}
+
+.navbar-search:hover{
+
+  border-color:rgba(100,212,200,.28);
+
+}
+
+.navbar-search input{
+
+  width:100%;
+
+  background:transparent;
+
+  border:none;
+
+  outline:none;
+
+  color:#eef6ff;
+
+  font-size:13px;
+
+  cursor:pointer;
+
+}
+
+.navbar-search input::placeholder{
+
+  color:#70889d;
+
+}
+
+/* --------------------------------------------------------- */
+/* Icon */
+/* --------------------------------------------------------- */
+
+.icon-button{
+
+  position:relative;
+
+  width:40px;
+  height:40px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:10px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.04);
+
+  color:#b8d2e8;
+
+  cursor:pointer;
+
+  transition:.22s;
+
+}
+
+.icon-button:hover{
+
+  border-color:rgba(100,212,200,.30);
+
+  background:rgba(100,212,200,.08);
+
+  color:#64d4c8;
+
+}
+
+.badge{
+
+  position:absolute;
+
+  top:-5px;
+  right:-5px;
+
+  width:18px;
+  height:18px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:#ef4444;
+
+  border:2px solid #08172a;
+
+  color:white;
+
+  font-size:9px;
+
+  font-weight:800;
+
+}
+
+/* --------------------------------------------------------- */
+/* Profile */
+/* --------------------------------------------------------- */
+
+.profile{
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:0 12px;
+
+  height:40px;
+
+  border-radius:10px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.04);
+
+  color:#d7e7f5;
+
+  transition:.25s;
+
+}
+
+.profile:hover{
+
+  border-color:rgba(100,212,200,.25);
+
+  background:rgba(100,212,200,.08);
+
+}
+
+.profile svg{
+
+  color:#64d4c8;
+
+  font-size:18px;
+
+}
+
+.profile span{
+
+  font-size:13px;
+
+  font-weight:600;
+
+}
+
+/* --------------------------------------------------------- */
+/* Responsive */
+/* --------------------------------------------------------- */
+
+@media (max-width:1100px){
+
+  .last-updated{
+
+    display:none;
+
+  }
+
+}
+
+@media (max-width:860px){
+
+  .navbar{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+  }
+
+  .navbar-actions{
+
+    width:100%;
+
+    flex-wrap:wrap;
+
+  }
+
+  .navbar-search{
+
+    flex:1;
+
+    width:100%;
+
+  }
+
+}
+
+@media (max-width:640px){
+
+  .live-badge{
+
+    display:none;
+
+  }
+
+}

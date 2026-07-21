@@ -3,8 +3,8 @@ import os
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.db.database import get_db
-from app.services.document_service import (
+from backend.app.db.database import get_db
+from backend.app.services.document_service import (
     create_document,
     get_documents,
     get_document,

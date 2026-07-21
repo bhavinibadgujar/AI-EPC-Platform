@@ -1,0 +1,1 @@
+UPS shall support full IT load for 15 minutes. Generator shall complete a 4 hour load bank test at 100%.

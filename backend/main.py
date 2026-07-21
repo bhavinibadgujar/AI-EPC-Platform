@@ -1,26 +1,10 @@
-from fastapi import FastAPI
+﻿"""Compatibility entry point for the consolidated FastAPI app.
 
-from backend.api.routes.schedule import router as schedule_router
-from backend.api.routes.compliance import router as compliance_router
+Preferred command:
+    uvicorn backend.app.main:app --reload
 
-app = FastAPI(
-    title="AI EPC Platform"
-)
+Legacy command still works:
+    uvicorn backend.main:app --reload
+"""
 
-@app.get("/")
-def home():
-    return {
-        "message": "AI EPC Backend is running"
-    }
-
-app.include_router(
-    schedule_router,
-    prefix="/ai",
-    tags=["Schedule"]
-)
-
-app.include_router(
-    compliance_router,
-    prefix="/ai",
-    tags=["Compliance"]
-)
+from backend.app.main import app

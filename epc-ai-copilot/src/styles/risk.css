@@ -1,0 +1,28 @@
+.risk-page {}
+
+.schedule-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.schedule-upload-row input[type="file"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #a0b5c8;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Re-use clause-tag from compliance */
+.clause-tag {
+  color: #68a7ff;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: 'Inter', monospace;
+}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from app.schemas.timeline import TimelineItem
-from app.services.timeline_service import get_timeline_data
+from backend.app.schemas.timeline import TimelineItem
+from backend.app.services.timeline_service import get_timeline_data
 
 router = APIRouter(
     prefix="/timeline",

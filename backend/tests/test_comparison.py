@@ -1,6 +1,8 @@
-from backend.agents.compliance.agent import ComplianceAgent
+﻿from backend.app.agents.consequence.engine import ConsequenceEngine
 
-agent = ComplianceAgent()
-result = agent.analyze("scripts/output/pdfs/spec_1.pdf", "scripts/output/pdfs/vendor_submittal_1.pdf")
 
-print(result)
+def test_consequence_engine_maps_ups_flag():
+    result = ConsequenceEngine().calculate({"parameter": "UPS battery autonomy", "severity": "Critical", "confidence": 0.9})
+
+    assert "Electrical" in result["affected_trades"]
+    assert result["severity_score"] == 0.9

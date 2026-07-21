@@ -1,0 +1,21 @@
+Vendor,Equipment,Project,Status,Date
+ABB,Turbine,Gamma Wind Farm,Pending,2025-01-22
+Schneider Electric,Generator,Delta Chemical Plant,Open,2024-07-13
+GE,Generator,Alpha Refinery,Open,2024-04-16
+Honeywell,Compressor,Gamma Wind Farm,Approved,2024-05-20
+Honeywell,Boiler,Beta Solar Plant,Pending,2026-08-08
+GE,Boiler,Alpha Refinery,Pending,2025-10-18
+Honeywell,Compressor,Alpha Refinery,Closed,2026-05-17
+GE,Chiller,Beta Solar Plant,Closed,2025-12-15
+Emerson,Generator,Delta Chemical Plant,Rejected,2026-02-10
+ABB,Compressor,Gamma Wind Farm,Open,2026-01-07
+Siemens,Chiller,Beta Solar Plant,Pending,2026-11-23
+Emerson,Boiler,Beta Solar Plant,Approved,2024-01-16
+ABB,Turbine,Alpha Refinery,Closed,2024-03-24
+ABB,Pump,Delta Chemical Plant,Closed,2026-11-21
+Honeywell,Turbine,Alpha Refinery,Rejected,2024-01-20
+Schneider Electric,Generator,Gamma Wind Farm,Closed,2026-07-13
+GE,Turbine,Alpha Refinery,Pending,2024-11-15
+GE,Compressor,Gamma Wind Farm,Approved,2024-04-20
+GE,Chiller,Alpha Refinery,Rejected,2024-06-02
+Schneider Electric,Compressor,Beta Solar Plant,Rejected,2026-10-19

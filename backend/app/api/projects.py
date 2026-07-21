@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.db.database import get_db
-from app.schemas.project import ProjectCreate
-from app.services.project_service import (
+from backend.app.db.database import get_db
+from backend.app.schemas.project import ProjectCreate
+from backend.app.services.project_service import (
     create_project,
     get_projects,
     get_project,

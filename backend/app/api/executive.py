@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-
-from app.schemas.executive import ExecutiveSummary
-from app.services.executive_service import get_executive_summary
+from backend.app.schemas.executive import ExecutiveSummary
+from backend.app.services.executive_service import get_executive_summary
 
 router = APIRouter(
     prefix="/executive-summary",

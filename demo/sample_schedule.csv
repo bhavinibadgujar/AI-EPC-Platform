@@ -1,0 +1,4 @@
+activity,owner,float,finish
+Temporary power energization,Construction,0,9 days
+BMS point-to-point testing,Controls,2,4 days
+Chilled water balancing,Mechanical,8,21 days
