@@ -34,7 +34,7 @@ EPC Orbit solves this by grounding every AI answer in the actual uploaded projec
 | Supply Chain Intelligence | 🔧 Scaffolded | Frontend route exists; agent logic not fully wired |
 | Commissioning Copilot | 🔧 Scaffolded | Planned for post-hackathon development |
 
-> **Honesty note:** Scaffolded modules have frontend routes and partial backend structure but were not fully validated within the hackathon window. They are not claimed as working features.
+> **note:** Scaffolded modules have frontend routes and partial backend structure but were not fully validated within the hackathon window. They are not claimed as working features.
 
 ---
 
