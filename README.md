@@ -1,269 +1,230 @@
-# 🚀 EPC Orbit
-### AI Intelligence Platform for Data Centre EPC Project Delivery
+# EPC Orbit — AI Intelligence Platform for Data Centre EPC Projects
 
-> An AI-powered platform that transforms Engineering, Procurement, and Construction (EPC) project management using Generative AI, intelligent document analysis, schedule risk prediction, and compliance automation.
+> A RAG-powered AI platform that helps EPC engineers verify compliance, retrieve project knowledge, and summarise project status directly from uploaded engineering documents — without hallucinating answers from general training data.
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688.svg)
+![React](https://img.shields.io/badge/React-Vite-61DAFB.svg)
 ![Gemini](https://img.shields.io/badge/Google-Gemini-orange.svg)
+![ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-blueviolet.svg)
 
 ---
 
-## 📖 Overview
+## The Problem
 
-Data centre EPC projects involve thousands of documents, vendors, schedules, and quality inspections. Most project information exists across disconnected systems, making compliance verification and project monitoring slow and error-prone.
+A typical data centre EPC project generates 200–500 engineering documents — specifications, datasheets, RFIs, inspection reports — across civil, mechanical, and electrical disciplines. Engineers manually cross-reference these documents to check compliance and answer project queries. This is slow, inconsistent, and a bottleneck when project timelines are under pressure.
 
-**EPC Orbit** provides an AI-powered intelligence layer that centralizes project information and enables engineers to:
+Generic keyword search doesn't work: a specification might say "maximum allowable temperature" in one document and "thermal limit" in another. General-purpose LLMs can't be trusted: they hallucinate domain-specific answers they weren't trained on.
 
-- Verify compliance automatically
-- Analyze project schedules
-- Search project documents using AI
-- Generate project reports
-- Monitor project health from a single dashboard
+EPC Orbit solves this by grounding every AI answer in the actual uploaded project documents using Retrieval-Augmented Generation (RAG).
 
 ---
 
-# ✨ Features
+## What's Built (Prototype — ET Hackathon 2.0)
 
-## 📄 Smart Document Upload
-Upload project specifications, contracts, schedules, and technical documents.
+| Module | Status | Description |
+|---|---|---|
+| PDF Upload | ✅ Working | Upload engineering specs and documents for AI processing |
+| AI Compliance Agent | ✅ Working | Flags non-conformances at clause level against uploaded specs |
+| RAG Knowledge Copilot | ✅ Working | Answers free-form questions grounded in uploaded documents |
+| Executive AI Summary | ✅ Working | Generates structured project status brief from document findings |
+| Dashboard | ✅ Working | Compliance status, risk overview, uploaded documents |
+| Schedule Risk Analysis | 🔧 Scaffolded | Backend structure exists; end-to-end validation incomplete |
+| Supply Chain Intelligence | 🔧 Scaffolded | Frontend route exists; agent logic not fully wired |
+| Commissioning Copilot | 🔧 Scaffolded | Planned for post-hackathon development |
 
----
-
-## ✅ AI Compliance Checking
-Automatically compares uploaded specifications and identifies:
-
-- Missing requirements
-- Compliance gaps
-- Specification mismatches
-- Non-conformance issues
-
----
-
-## 📅 Schedule Risk Analysis
-
-Uses graph-based dependency analysis to detect:
-
-- Critical paths
-- Delay risks
-- Task dependency issues
-- Schedule bottlenecks
+> **Honesty note:** Scaffolded modules have frontend routes and partial backend structure but were not fully validated within the hackathon window. They are not claimed as working features.
 
 ---
 
-## 🤖 AI Knowledge Copilot
-
-Powered by **Google Gemini**
-
-Ask questions like:
-
-> "What is the required UPS capacity?"
-
-> "Which specification mentions cable routing?"
-
-> "Show all HVAC requirements."
-
----
-
-## 📊 Executive Dashboard
-
-Centralized dashboard showing
-
-- Compliance Status
-- Risk Analysis
-- Uploaded Documents
-- Reports
-- Project Overview
-
----
-
-## 📑 Report Generation
-
-Generate downloadable reports containing
-
-- Compliance Summary
-- Schedule Analysis
-- AI Findings
-- Project Insights
-
----
-
-# 🏗️ Architecture
+## Architecture
 
 ```
-User
-   │
-React Frontend
-   │
-FastAPI Backend
-   │
+User (Browser)
+      │
+      ▼
+React + Vite Frontend          ← MUI components, Recharts dashboard, Framer Motion
+      │
+      ▼  REST (JSON)
+FastAPI Backend (Python)        ← Async, auto OpenAPI docs at /docs
+      │
+      ▼
 AI Agent Layer
- ├── Compliance Agent
- ├── Knowledge Copilot
- ├── Schedule Risk Agent
- ├── AI Risk Engine
- └── Executive Brief Agent
-   │
-Gemini API + ChromaDB
-   │
-Project Documents
+ ├── Compliance Agent           ← POST /compliance
+ │     └── PyMuPDF → Chunker → ChromaDB embed → Gemini → Clause-level findings
+ ├── RAG Knowledge Copilot      ← POST /knowledge
+ │     └── Query → ChromaDB retrieval → Gemini (context-grounded) → Answer
+ ├── Executive Brief Agent      ← POST /executive-summary
+ │     └── Aggregates findings → Structured summary via Gemini
+ ├── Schedule Risk Agent        ← POST /schedule-risk  [scaffolded]
+ └── Commissioning Copilot      ← [planned]
+      │
+      ▼
+ChromaDB (local vector store)   ← Embedded, no cloud dependency
+Google Gemini API               ← LLM + embeddings
+PyMuPDF                         ← PDF text extraction
 ```
 
----
+### Key Architecture Decisions
 
-# 🛠 Tech Stack
+**RAG over fine-tuning** — Fine-tuning requires labelled domain data we don't have, and bakes knowledge into weights. RAG grounds answers in uploaded documents at inference time — the system works on any EPC project without retraining.
 
-| Layer | Technology |
-|--------|------------|
-| Backend | FastAPI |
-| AI Model | Google Gemini |
-| Vector Database | ChromaDB |
-| Document Processing | PyMuPDF |
-| Data Processing | Pandas |
-| Graph Analysis | NetworkX |
-| Configuration | python-dotenv |
-| Testing | Pytest |
-| Frontend | JavaScript, CSS |
+**ChromaDB (embedded)** — Runs in-process with FastAPI, no cloud dependency, no extra infrastructure. Trade-off: not suitable for millions of vectors, but a single EPC project's document set stays well under 50,000 chunks.
+
+**Chunk size: ~500 tokens, 50-token overlap** — Smaller chunks lost cross-sentence compliance clause context. Larger chunks degraded embedding precision. The overlap ensures clause boundaries spanning two chunks remain retrievable.
+
+**PyMuPDF over pdfplumber** — Handles multi-column engineering layouts and large document sizes faster and more accurately for this document class.
+
+**Modular agents, not one monolithic prompt** — Each agent has its own endpoint and responsibility. Failure in one agent does not affect others; each can be tested and improved independently.
 
 ---
 
-# 📂 Project Structure
+## Tech Stack
+
+| Layer | Technology | Why |
+|---|---|---|
+| Frontend | React + Vite | Fast builds, component isolation |
+| UI Components | MUI (Material UI) | Consistent design system without a custom DSL |
+| Charts | Recharts | Lightweight, React-native charting |
+| Backend | FastAPI | Async, auto docs, clean router structure |
+| LLM | Google Gemini | Available via free-tier API, multimodal capable |
+| Embeddings | Gemini Embeddings | Same API, avoids a second dependency |
+| Vector Store | ChromaDB | Local, embedded, Python-native |
+| PDF Parsing | PyMuPDF | Layout-aware, fast on large engineering PDFs |
+| Data Processing | Pandas | Schedule data handling |
+| Graph Analysis | NetworkX | Critical path computation (schedule agent) |
+| Testing | Pytest | Backend unit tests |
+
+---
+
+## Project Structure
 
 ```
 AI-EPC-Platform/
-│
 ├── backend/
-│   ├── app/
+│   ├── main.py                  # FastAPI app entry point
 │   ├── agents/
+│   │   ├── compliance_agent.py  # Compliance checking logic
+│   │   ├── knowledge_agent.py   # RAG copilot logic
+│   │   └── executive_agent.py   # Summary generation
 │   ├── api/
-│   ├── tests/
-│
-├── architecture/
-│
-├── dataset/
-│
-├── demo/
-│
-├── docs/
-│
-├── presentation/
-│
-├── scripts/
-│
-├── uploads/
-│
-├── output/
-│
+│   │   └── routes/              # Endpoint definitions
+│   └── tests/                   # Pytest test suite
+├── epc-ai-copilot/              # React + Vite frontend
+│   └── src/
+│       └── pages/               # /compliance /chat /risk /dashboard
+├── architecture/                # Architecture diagrams
+├── dataset/                     # Sample engineering documents
+├── demo/                        # Demo assets
+├── docs/                        # Documentation
 ├── requirements.txt
-│
 └── README.md
 ```
 
 ---
 
-# 🚀 Getting Started
+## Getting Started
 
-## Prerequisites
+### Prerequisites
 
 - Python 3.9+
+- Node.js 18+
 - Git
-- Google Gemini API Key
+- Google Gemini API key (free tier at [aistudio.google.com](https://aistudio.google.com))
 
----
-
-## Installation
-
-Clone the repository
+### Backend Setup
 
 ```bash
+# Clone the repository
 git clone https://github.com/bhavinibadgujar/AI-EPC-Platform.git
-```
-
-Move into the project
-
-```bash
 cd AI-EPC-Platform
-```
 
-Install dependencies
-
-```bash
+# Install Python dependencies
 pip install -r requirements.txt
+
+# Create environment file
+echo "GEMINI_API_KEY=your_api_key_here" > .env
+
+# Start the backend
+python -m uvicorn backend.main:app --reload
 ```
 
-Create a `.env` file
+API docs available at: `http://127.0.0.1:8000/docs`
 
-```env
-GEMINI_API_KEY=YOUR_API_KEY
-```
-
-Run the backend
+### Frontend Setup
 
 ```bash
-python -m uvicorn backend.app.main:app --reload
+cd epc-ai-copilot
+npm install
+npm run dev
 ```
 
-API Documentation
+Frontend available at: `http://localhost:5173`
 
-```
-http://127.0.0.1:8000/docs
-```
-
----
-
-# 🧪 Run Tests
+### Run Tests
 
 ```bash
-python -m pytest backend
+python -m pytest backend/tests
 ```
 
 ---
 
-# 🎯 Current Modules
+## API Reference
 
-- ✅ Document Upload
-- ✅ AI Compliance Agent
-- ✅ Schedule Risk Analysis
-- ✅ AI Knowledge Copilot
-- ✅ Dashboard
-- ✅ Report Generation
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/upload` | Upload a PDF for processing |
+| POST | `/compliance` | Run compliance check against uploaded specs |
+| POST | `/knowledge` | Ask a free-form question from document context |
+| POST | `/executive-summary` | Generate a structured project summary |
+| POST | `/schedule-risk` | Schedule risk analysis (scaffolded) |
+| GET  | `/docs` | Auto-generated OpenAPI documentation |
+
+### Example: Knowledge Copilot Query
+
+```bash
+curl -X POST http://127.0.0.1:8000/knowledge \
+  -H "Content-Type: application/json" \
+  -d '{"query": "What is the required UPS capacity?", "document_id": "spec-001"}'
+```
+
+```json
+{
+  "answer": "The specification on page 14 requires a minimum UPS capacity of 500 kVA with N+1 redundancy.",
+  "source_chunks": ["spec-001_chunk_42", "spec-001_chunk_43"],
+  "confidence": "high"
+}
+```
 
 ---
 
-# 🚧 Future Roadmap
+## Roadmap
 
-- Commissioning QA Copilot
-- Supply Chain Visibility Agent
-- Computer Vision Drawing Review
-- RBAC Authentication
-- Cloud Deployment
-- ERP & QMS Integration
+Post-hackathon development priorities, in order:
+
+1. **Complete Schedule Risk Agent** — NetworkX critical path + Gemini-interpreted delay risk
+2. **Complete Commissioning Copilot** — QA checklist validation from commissioning docs
+3. **Supply Chain Intelligence** — Vendor lead time risk flagging
+4. **RBAC Authentication** — Role-based access for project managers vs. engineers
+5. **Cloud Deployment** — Docker + cloud hosting for multi-project use
+6. **Computer Vision Drawing Review** — Extend to engineering drawings (not just text PDFs)
+7. **ERP / QMS Integration** — Connect to SAP PM, Oracle Primavera
 
 ---
 
-# 👥 Team
+## Team
 
 | Name | Role |
-|------|------|
-| **Bhavini Badgujar** | AI Agents |
-| **Brinda Naik** | Backend Engineering |
-| **Mahek Batavia** | UI/UX Design |
+|---|---|
+| Bhavini Badgujar | AI Agents & Intelligence Layer |
+| Brinda Naik | Backend Engineering |
+| Mahek Batavia | UI/UX & Frontend |
+
+Built for **ET Hackathon 2.0**
 
 ---
 
-# 📄 License
+## License
 
-This project is licensed under the **MIT License**.
-
----
-
-# 🌟 Why EPC Orbit?
-
-Traditional EPC projects rely on fragmented documents and manual verification.
-
-EPC Orbit introduces an intelligent AI layer that understands project documents, predicts risks, automates compliance, and assists engineers throughout the project lifecycle, improving productivity, reducing delays, and enabling better decision-making.
-
----
-
-⭐ If you like this project, consider giving it a star!
+MIT License — see [LICENSE](LICENSE) for details.
